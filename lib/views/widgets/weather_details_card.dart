@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/weather_model.dart';
+import 'glass_card.dart';
 
 class WeatherDetailsCard extends StatelessWidget {
   final CurrentWeather current;
@@ -14,19 +15,25 @@ class WeatherDetailsCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Detail Cuaca Hari Ini',
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
+          child: Text(
+            'Detail Cuaca Hari Ini',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 1)),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
-              child: _buildDetailItem(
-                context,
+              child: _buildDetailGlassItem(
                 icon: Icons.thermostat_rounded,
                 iconColor: Colors.deepOrangeAccent,
                 label: 'Suhu Terasa',
@@ -35,10 +42,9 @@ class WeatherDetailsCard extends StatelessWidget {
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _buildDetailItem(
-                context,
+              child: _buildDetailGlassItem(
                 icon: Icons.water_drop_rounded,
-                iconColor: Colors.blueAccent,
+                iconColor: Colors.lightBlueAccent,
                 label: 'Kelembapan',
                 value: '${current.relativeHumidity}%',
               ),
@@ -49,20 +55,18 @@ class WeatherDetailsCard extends StatelessWidget {
         Row(
           children: [
             Expanded(
-              child: _buildDetailItem(
-                context,
+              child: _buildDetailGlassItem(
                 icon: Icons.air_rounded,
-                iconColor: Colors.teal,
+                iconColor: Colors.tealAccent,
                 label: 'Kecepatan Angin',
                 value: '${current.windSpeed.toStringAsFixed(1)} km/h',
               ),
             ),
             const SizedBox(width: 12),
             Expanded(
-              child: _buildDetailItem(
-                context,
+              child: _buildDetailGlassItem(
                 icon: Icons.cloudy_snowing,
-                iconColor: Colors.indigoAccent,
+                iconColor: Colors.cyanAccent,
                 label: 'Curah Hujan',
                 value: '${current.precipitation.toStringAsFixed(1)} mm',
               ),
@@ -73,36 +77,27 @@ class WeatherDetailsCard extends StatelessWidget {
     );
   }
 
-  Widget _buildDetailItem(
-    BuildContext context, {
+  Widget _buildDetailGlassItem({
     required IconData icon,
     required Color iconColor,
     required String label,
     required String value,
   }) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: isDark ? const Color(0xFF1E2230) : Colors.white,
-        borderRadius: BorderRadius.circular(18),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+    return GlassCard(
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 16),
+      borderRadius: 20,
+      backgroundColor: Colors.white.withValues(alpha: 0.12),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withValues(alpha: 0.12),
-              borderRadius: BorderRadius.circular(12),
+              color: iconColor.withValues(alpha: 0.2),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(
+                color: iconColor.withValues(alpha: 0.4),
+                width: 1,
+              ),
             ),
             child: Icon(
               icon,
@@ -119,7 +114,7 @@ class WeatherDetailsCard extends StatelessWidget {
                   label,
                   style: TextStyle(
                     fontSize: 12,
-                    color: isDark ? Colors.white60 : const Color(0xFF758A99),
+                    color: Colors.white.withValues(alpha: 0.75),
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -127,8 +122,9 @@ class WeatherDetailsCard extends StatelessWidget {
                 Text(
                   value,
                   style: const TextStyle(
-                    fontSize: 15,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
               ],

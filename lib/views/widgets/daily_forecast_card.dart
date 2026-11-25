@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../models/weather_model.dart';
 import '../../utils/weather_code_helper.dart';
+import 'glass_card.dart';
 
 class DailyForecastCard extends StatelessWidget {
   final DailyForecast daily;
@@ -13,39 +14,34 @@ class DailyForecastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final isDark = theme.brightness == Brightness.dark;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Perkiraan Cuaca 7 Hari ke Depan',
-          style: TextStyle(
-            fontSize: 17,
-            fontWeight: FontWeight.bold,
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
+          child: Text(
+            'Perkiraan Cuaca 7 Hari ke Depan',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(color: Colors.black26, blurRadius: 4, offset: Offset(0, 1)),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 12),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-          decoration: BoxDecoration(
-            color: isDark ? const Color(0xFF1E2230) : Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: isDark ? 0.2 : 0.04),
-                blurRadius: 10,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
+        GlassCard(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          borderRadius: 24,
+          backgroundColor: Colors.white.withValues(alpha: 0.12),
           child: ListView.separated(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemCount: daily.items.length,
             separatorBuilder: (context, index) => Divider(
-              color: isDark ? Colors.white12 : Colors.grey.shade200,
+              color: Colors.white.withValues(alpha: 0.15),
               height: 16,
             ),
             itemBuilder: (context, index) {
@@ -81,6 +77,7 @@ class DailyForecastCard extends StatelessWidget {
                         style: TextStyle(
                           fontWeight: index == 0 ? FontWeight.bold : FontWeight.w500,
                           fontSize: 14,
+                          color: Colors.white,
                         ),
                       ),
                     ),
@@ -88,7 +85,7 @@ class DailyForecastCard extends StatelessWidget {
                     // Ikon Cuaca & Deskripsi Singkat
                     Icon(
                       condition.icon,
-                      color: condition.gradientColors.first,
+                      color: Colors.white,
                       size: 24,
                     ),
                     const SizedBox(width: 8),
@@ -96,8 +93,8 @@ class DailyForecastCard extends StatelessWidget {
                       child: Text(
                         condition.description,
                         style: TextStyle(
-                          fontSize: 12,
-                          color: isDark ? Colors.white70 : Colors.black54,
+                          fontSize: 13,
+                          color: Colors.white.withValues(alpha: 0.8),
                         ),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
@@ -108,10 +105,14 @@ class DailyForecastCard extends StatelessWidget {
                     if (item.precipitationProbability > 0)
                       Container(
                         margin: const EdgeInsets.only(right: 12),
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                         decoration: BoxDecoration(
-                          color: Colors.blue.withValues(alpha: 0.12),
-                          borderRadius: BorderRadius.circular(8),
+                          color: Colors.lightBlueAccent.withValues(alpha: 0.25),
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: Colors.lightBlueAccent.withValues(alpha: 0.4),
+                            width: 1,
+                          ),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -119,14 +120,14 @@ class DailyForecastCard extends StatelessWidget {
                             const Icon(
                               Icons.water_drop,
                               size: 12,
-                              color: Colors.blueAccent,
+                              color: Colors.lightBlueAccent,
                             ),
                             const SizedBox(width: 2),
                             Text(
                               '${item.precipitationProbability}%',
                               style: const TextStyle(
                                 fontSize: 11,
-                                color: Colors.blueAccent,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -139,15 +140,16 @@ class DailyForecastCard extends StatelessWidget {
                       '${item.tempMax.round()}°',
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                        fontSize: 15,
+                        color: Colors.white,
                       ),
                     ),
-                    const SizedBox(width: 4),
+                    const SizedBox(width: 6),
                     Text(
                       '${item.tempMin.round()}°',
                       style: TextStyle(
-                        color: isDark ? Colors.white38 : Colors.grey,
-                        fontSize: 13,
+                        color: Colors.white.withValues(alpha: 0.5),
+                        fontSize: 14,
                       ),
                     ),
                   ],
