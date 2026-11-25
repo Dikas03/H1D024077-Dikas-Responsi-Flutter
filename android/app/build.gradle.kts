@@ -7,7 +7,7 @@ plugins {
 android {
     namespace = "com.example.responsi_flutter"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // ndkVersion tidak diperlukan untuk aplikasi Flutter ini sehingga menghemat ruang disk dan waktu build
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
