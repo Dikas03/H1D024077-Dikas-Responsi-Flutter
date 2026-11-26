@@ -177,6 +177,10 @@ Aplikasi memanfaatkan 2 endpoint resmi dari **Open-Meteo**:
    ```bash
    flutter run
    ```
+   <img width="659" height="238" alt="image" src="https://github.com/user-attachments/assets/b40136f5-f9e5-422a-b685-cddf890e5850" />
+   <img width="653" height="246" alt="image" src="https://github.com/user-attachments/assets/3277dd9e-0b14-4a29-b4c4-f9ae3ce960a3" />
+
+
 
 ---
 
